@@ -1,20 +1,33 @@
 package com.example.amauryesparza.tweenanimation;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends Activity implements Animation.AnimationListener{
+
+    private ImageView image;
+
+    private Animation scaleAnimation;
+    private Animation translateAnimation;
+    private Animation alphaAnimation;
+    private Animation rotateAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        image = (ImageView) findViewById(R.id.imageView);
+
+
     }
 
     @Override
@@ -39,21 +52,46 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    protected void rotateAnimation(){
+    public void rotateAnimation(View v){
+        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
+        rotateAnimation.setAnimationListener(this);
+        image.startAnimation(rotateAnimation);
 
     }
 
-    protected void scaleAnimation(){
+    public void scaleAnimation(View v){
+        scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
+        scaleAnimation.setAnimationListener(this);
+        image.startAnimation(scaleAnimation);
+    }
+
+    public void translateAnimation(View v){
+        translateAnimation = AnimationUtils.loadAnimation(this, R.anim.tranlate_anim);
+        translateAnimation.setAnimationListener(this);
+        image.startAnimation(translateAnimation);
+    }
+
+    public void alphaAnimation(View v){
+        alphaAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim);
+        alphaAnimation.setAnimationListener(this);
+        image.startAnimation(alphaAnimation);
 
     }
 
-    protected void translateAnimation(){
-
+    //Animation Listeners
+    @Override
+    public void onAnimationStart(Animation animation){
+        Toast.makeText(this, "Animation Start", Toast.LENGTH_LONG).show();
     }
 
-    protected void alphaAnimation(){
-
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+        Toast.makeText(this, "Animation Repeat", Toast.LENGTH_LONG).show();
     }
 
-
+    @Override
+    public void onAnimationEnd(Animation animation){
+        Toast.makeText(this, "Animation End", Toast.LENGTH_LONG).show();
+    }
+    //
 }
